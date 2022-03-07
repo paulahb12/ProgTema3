@@ -1,0 +1,34 @@
+---
+title: "grafico"
+author: "paula"
+date: "2/3/2022"
+output: html_document
+---
+
+```{r}
+library(readr)
+library(ggplot2)
+
+covid_data <- read_csv("C:/paula/tratamiento_datos/Tema 3 Visualización-20220223(1)/owid-covid-data.csv")
+# Para extraer todas las observaciones que tienen localizacion : "United States"
+US <- covid_data[covid_data$location == "United States",] 
+I <- covid_data[covid_data$location == "Italy",] 
+FR <- covid_data[covid_data$location == "France",]
+G <- covid_data[covid_data$location == "Germany",]
+Can <- covid_data[covid_data$location == "Canada",]
+Jap <- covid_data[covid_data$location == "Japan",]
+UK <- covid_data[covid_data$location == "United Kingdom",]
+Es <- covid_data[covid_data$location == "Spain",]
+
+
+
+df <- rbind(US,I,FR,G,Can,Jap,UK,Es)
+df[date] = as.Date(df$date, format="%m/%d/%Y")
+
+g <- ggplot(df,mapping = aes(x = date, y = new_deaths_smoothed_per_million, group = location)) + geom_line(aes(colour = location)) + scale_color_manual(values=c("violet", "red", "green", "blue", "grey", "black", "pink", "purple"))
+g
+
+
+#especificas el df, luego la columna, y el pais 
+```
+
